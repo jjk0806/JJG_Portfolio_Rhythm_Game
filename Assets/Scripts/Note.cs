@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Notes : MonoBehaviour
+public class Note : MonoBehaviour
 {
     public enum NoteLine { Line_1, Line_2, Line_3, Line_4 }
     public float judgeTime;
-    public float dropSpeed;
 
-    GameManager.Judge noteJudge;
+    GameManager.Judge noteJudge { get; set; }
+
     public NoteLine line;
     public KeyCode key;
     // Start is called before the first frame update
     void Start()
     {
-        key = SetLineProcess();
-        Debug.Log("key°ª º¯°æ " + key);
+        key = SetLineProcess();       
     }
 
     // Update is called once per frame
@@ -23,6 +22,7 @@ public class Notes : MonoBehaviour
     {
         if (GameManager.instance.status == GameManager.GameStatus.PLAY)
         JudgeProcess();
+        Move();
     }
 
     void OnEnable()
@@ -32,7 +32,7 @@ public class Notes : MonoBehaviour
 
     void Move()
     {
-        transform.Translate(Vector2.down * dropSpeed);
+        transform.Translate(Vector2.down * GameManager.instance.noteSpeed * Time.deltaTime);
     }
 
     KeyCode SetLineProcess()
@@ -71,8 +71,7 @@ public class Notes : MonoBehaviour
 
     bool IsWithinRange(float musicTime, float judgeTime, float rangeMilliseconds)
     {
-        float rangeSeconds = rangeMilliseconds / 1000f;
-        
+        float rangeSeconds = rangeMilliseconds / 1000f;       
         return (musicTime >= judgeTime - rangeSeconds && musicTime <= judgeTime + rangeSeconds);
     }
 }

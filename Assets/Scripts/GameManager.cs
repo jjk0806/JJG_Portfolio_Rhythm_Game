@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; set; }
     public enum Judge { None, KOOL, COOL, GOOD, MISS, FAIL }
-    public enum GameStatus { PLAY, STOP }
+    public enum GameStatus { START, PLAY, STOP, EDIT }
+    public Transform[] notePosition;
+    public float noteSpeed;
     public Controller controller;
     public GameStatus status;
 
@@ -27,5 +29,13 @@ public class GameManager : MonoBehaviour
     void Update()
     {
        
+    }
+
+    void SetGameStatus()
+    {
+        switch (status)
+        {
+
+        }
     }
 }
